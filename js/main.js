@@ -31,6 +31,9 @@ const letrasContainer = document.getElementById("letras-container");
 const audioPlayer = document.getElementById("audioPlayer");
 const loadingMessage = document.getElementById("loading-message");
 
+/**
+ * Cria os botões das letras e adiciona ao contêiner
+ */
 function criarBotoesLetras() {
   letras.forEach((letra) => {
     const button = document.createElement("button");
@@ -42,47 +45,33 @@ function criarBotoesLetras() {
   });
 }
 
+/**
+ * Faz requisição à função serverless para gerar áudio da letra
+ * @param {string} letra - A letra clicada
+ */
 async function falarLetra(letra) {
-  const textToSpeak = letra;
-
   loadingMessage.style.display = "block";
   audioPlayer.src = "";
 
   try {
-    const response = await fetch(
-      `https://texttospeech.googleapis.com/v1/text:synthesize?key=${GOOGLE_CLOUD_API_KEY}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          input: { text: textToSpeak },
-          voice: {
-            languageCode: "pt-BR",
-            name: "pt-BR-Neural2-A",
-            ssmlGender: "FEMALE",
-          },
-          audioConfig: {
-            audioEncoding: "MP3",
-            speakingRate: 0.9,
-          },
-        }),
-      }
-    );
+    const response = await fetch("/api/tts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: letra }),
+    });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Erro na API:", errorData);
-      alert("Erro ao gerar o som. Verifique sua chave de API.");
+    const data = await response.json();
+
+    if (!response.ok || data.error) {
+      console.error("Erro na API:", data.error || response.statusText);
+      alert("Erro ao gerar o som. Veja o console para detalhes.");
       loadingMessage.style.display = "none";
       return;
     }
 
-    const data = await response.json();
-    const audioContent = data.audioContent;
-
-    audioPlayer.src = "data:audio/mp3;base64," + audioContent;
+    audioPlayer.src = "data:audio/mp3;base64," + data.audioContent;
     audioPlayer.play();
 
     audioPlayer.onended = () => {
@@ -90,7 +79,7 @@ async function falarLetra(letra) {
     };
   } catch (error) {
     console.error("Erro na requisição:", error);
-    alert("Erro na requisição da API. Veja o console.");
+    alert("Erro ao se comunicar com o servidor.");
     loadingMessage.style.display = "none";
   }
 }
