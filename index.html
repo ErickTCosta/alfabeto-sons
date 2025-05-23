@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sons das Letras para Crianças</title>
+    <link rel="stylesheet" href="style/main.css" />
+  </head>
+  <body>
+    <h1>Clique na letra para ouvir o som!</h1>
+
+    <div id="letras-container"></div>
+
+    <audio id="audioPlayer"></audio>
+    <p id="loading-message">Gerando som, aguarde...</p>
+
+    <script>
+      const GOOGLE_CLOUD_API_KEY = window.GOOGLE_API_KEY;
+    </script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

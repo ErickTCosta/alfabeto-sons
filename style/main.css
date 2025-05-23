@@ -1,0 +1,101 @@
+/* Estilo global */
+body {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #fce4ec;
+  color: #333;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Título */
+h1 {
+  color: #880e4f;
+  margin-bottom: 30px;
+  text-align: center;
+  font-size: 2.5em;
+}
+
+/* Contêiner dos botões */
+#letras-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 15px;
+  max-width: 900px;
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Botões das letras */
+.letra-button {
+  width: 100%;
+  padding-bottom: 100%;
+  position: relative;
+  background-color: #ffab91;
+  border: none;
+  border-radius: 10px;
+  font-size: 3em;
+  font-weight: bold;
+  color: #d84315;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  user-select: none;
+}
+
+.letra-button span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Hover */
+.letra-button:hover {
+  background-color: #ff8a65;
+  transform: translateY(-5px);
+}
+
+/* Click (active) */
+.letra-button:active {
+  transform: translateY(0);
+  background-color: #ff7043;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Mensagem de carregamento */
+#loading-message {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #6a1b9a;
+  display: none;
+  font-weight: bold;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2em;
+  }
+
+  #letras-container {
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .letra-button {
+    font-size: 2.5em;
+  }
+}
